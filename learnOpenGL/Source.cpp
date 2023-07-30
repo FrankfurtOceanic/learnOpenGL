@@ -5,6 +5,10 @@
 #include <ShaderClass/Shader.h>
 #include "stb_image.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
@@ -209,6 +213,10 @@ int main() {
     glUniform1i(glGetUniformLocation(ourShader.ID, "texture"), 0); // manually
     ourShader.setInt("texture2", 1);
 
+
+
+    unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+
     ///render loop///
     while (!glfwWindowShouldClose(window)) {
         //input
@@ -229,6 +237,15 @@ int main() {
         glDrawArrays(GL_TRIANGLES, 0, 3); */
 
         ourShader.setFloat("mixPercent", mixAmount);
+
+
+        //transformations:
+        glm::mat4 trans = glm::mat4(1.0f); //define a transformation matrix
+        trans = glm::rotate(trans, (float) glfwGetTime(), glm::vec3(0.0, 0.0, 1.0));
+        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+        trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+        
 
         //render elements 
         glBindVertexArray(VAO);
