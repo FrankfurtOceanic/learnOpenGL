@@ -27,9 +27,12 @@ glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f); //because OpenGl is right-han
 glm::vec3 cameraFoward = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
+//members required for camera rotation base on mouse inputs
 float yaw = -90.0f;
 float pitch = 0.0f;
 float lastX = 400, lastY = 300;
+
+float zoom = 45.0f;
 
 
 int main() {
@@ -38,6 +41,7 @@ int main() {
     void checkCompileErrors(unsigned int shader);
     void checkSPLinkingErrors(unsigned int shader);
     void mouse_callback(GLFWwindow * window, double xpos, double ypos); //prototype for mouse movement
+    void scroll_callback(GLFWwindow * window, double xoffset, double yoffset); //prototype for zooming
     
     //initialize glfw with the major and minor version as well as using the core_profile
     glfwInit();
@@ -60,6 +64,7 @@ int main() {
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
     glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
     //initialize GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -264,6 +269,9 @@ int main() {
         view = glm::lookAt(cameraPos, cameraPos + cameraFoward, cameraUp);
         ourShader.setMat4("view", view);
 
+        //zooming camera
+        projection = glm::perspective(glm::radians(zoom), 800.0f / 600.0f, 0.1f, 100.0f);
+        ourShader.setMat4("projection", projection);
 
         ourShader.use();
         //glUseProgram(shaderProgram);
@@ -307,14 +315,14 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    /*
+    //adjust initial mouse position when window is first opened
     if (firstMouse) 
     {
         lastX = xpos;
         lastY = ypos;
         firstMouse = false;
     }
-    */
+
     //calculate offsets
     float xoffset = xpos - lastX;
     lastX = xpos;
@@ -339,6 +347,18 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
     //adjust camera direction
     cameraFoward = glm::normalize(direction);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) 
+{
+    zoom -= (float)yoffset;
+    if (zoom > 75.0f) {
+        zoom = 75.0f;
+    }
+
+    if (zoom < 1.0f) {
+        zoom = 1.0f;
+    }
 }
 
 void processInput(GLFWwindow* window) 
