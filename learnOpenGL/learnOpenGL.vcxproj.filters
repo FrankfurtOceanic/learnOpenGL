@@ -21,7 +21,7 @@
     <ClCompile Include="stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="10.3 movingCameraSystem.cpp">
+    <ClCompile Include="camera_class.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "Source.h"
-#include <ShaderClass/Shader.h>
+#include <CustomOpenGL/Shader.h>
 #include "stb_image.h"
 
 #include <glm/glm.hpp>
