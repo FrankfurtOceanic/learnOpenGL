@@ -21,7 +21,7 @@
     <ClCompile Include="stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="camera_class.cpp">
+    <ClCompile Include="12.1 simpleLighting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +32,10 @@
     <ClInclude Include="stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Desktop\OpenGL\includes\ShaderClass\Shader.h">
+    <ClInclude Include="..\..\..\..\Desktop\OpenGL\includes\CustomOpenGL\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Desktop\OpenGL\includes\CustomOpenGL\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
