@@ -167,13 +167,20 @@ int main() {
     glEnable(GL_DEPTH_TEST);
 
     //setting up the shader programs ---------------------------------------------------------------
-    Shader objectShader("Shaders/13.BasicLighting/13.Diffuse.vs", "Shaders/13.BasicLighting/13.1.Diffuse.fs");
+    Shader objectShader("Shaders/13.BasicLighting/13.Diffuse.vs", "Shaders/14.Materials/14.1.Material.fs");
     objectShader.use();
-    objectShader.setVec3("baseColor", 1.0f, 0.5f, 0.31f);
-    objectShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-    objectShader.setFloat("ambientStrength", 0.1f);
-    objectShader.setFloat("specularStrength", 0.5f);
-    objectShader.setVec3("lightPosition", lightPos);
+    //material properties
+    objectShader.setVec3("material.ambientColor", 1.0f, 1.0f, 1.0f);
+    objectShader.setVec3("material.diffuseColor", 1.0f, 1.0f, 1.0f);
+    objectShader.setVec3("material.specularColor", 0.5f, 0.5f, 0.5f);
+    objectShader.setFloat("material.shininess", 32.0f);
+    //light properties
+    objectShader.setVec3("light.position", lightPos);
+    objectShader.setVec3("light.ambientStrength", 0.2f, 0.2f, 0.2f);
+    objectShader.setVec3("light.diffuseStrength", 0.5f, 0.5f, 0.5f);
+    objectShader.setVec3("light.specularStrength", 1.0f, 1.0f, 1.0f);
+
+
 
     Shader lightShader("Shaders/12.Lighting/12.1.Colors.vs", "Shaders/12.Lighting/12.1.LightSource.fs");
 
@@ -211,6 +218,16 @@ int main() {
 
         objectShader.use();
 
+        glm::vec3 lightColor;
+        lightColor.x = sin(glfwGetTime()/2 * 2.0f);
+        lightColor.y = sin(glfwGetTime()/2 * 0.7f);
+        lightColor.z = sin(glfwGetTime()/2 * 1.3f);
+        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
+        objectShader.setVec3("light.ambientStrength", ambientColor);
+        objectShader.setVec3("light.diffuse", diffuseColor);
+
+
         glBindVertexArray(cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36); //draw using arrays since the cube doesn't have indices
 
@@ -221,6 +238,8 @@ int main() {
 
         // camera/view transformation
         lightShader.setMat4("view", view);
+
+        lightShader.setVec3("lightColor", lightColor);
 
         // object transformation
         model = glm::mat4(1.0f);
