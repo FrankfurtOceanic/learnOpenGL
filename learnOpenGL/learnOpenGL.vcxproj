@@ -142,7 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="13.1.PhongBasicLighting.cpp" />
+    <ClCompile Include="15.1.MappedMaterials.cpp" />
     <ClCompile Include="F:\Downloads\glad\src\glad.c" />
     <ClCompile Include="stb_image.cpp" />
   </ItemGroup>
