@@ -14,6 +14,10 @@ struct Material {
 struct Light {
 vec3 position;
 
+float constant;
+float linear;
+float quadratic;
+
 vec3 ambientStrength;
 vec3 diffuseStrength;
 vec3 specularStrength;
@@ -30,6 +34,10 @@ uniform vec3 viewPos;
 
 void main()
 {
+    //attenuation calculation
+
+    float distance = length(FragPos - light.position);
+    float attenuation = 1 / (light.constant + light.linear * distance + light.quadratic * distance * distance);
     //ambient
     vec3 ambient = light.ambientStrength * vec3(texture(material.diffuseMap, TexCoord));
 
@@ -46,5 +54,5 @@ void main()
     vec3 specular = (spec *vec3(texture(material.specularMap, TexCoord))) * light.specularStrength;
 
     //output
-    FragColor = vec4((ambient + diffuse + specular), 1.0);
+    FragColor = vec4((ambient + diffuse + specular) * attenuation, 1.0);
 }
