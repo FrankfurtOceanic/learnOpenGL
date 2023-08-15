@@ -21,7 +21,7 @@
     <ClCompile Include="stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="15.1.MappedMaterials.cpp">
+    <ClCompile Include="16.1.LightCasters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
