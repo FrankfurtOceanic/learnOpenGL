@@ -142,7 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="16.2.PointLight.cpp" />
+    <ClCompile Include="16.3.SpotLight.cpp" />
     <ClCompile Include="F:\Downloads\glad\src\glad.c" />
     <ClCompile Include="stb_image.cpp" />
   </ItemGroup>
