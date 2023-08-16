@@ -182,7 +182,7 @@ int main() {
     glEnable(GL_DEPTH_TEST);
 
     //setting up the shader programs ---------------------------------------------------------------
-    Shader objectShader("Shaders/15.MappedMaterials/15.1.MappedMaterial.vs", "Shaders/16.LightCasters/16.3.SpotLight.fs");
+    Shader objectShader("Shaders/15.MappedMaterials/15.1.MappedMaterial.vs", "Shaders/16.LightCasters/16.4.SoftSpotLight.fs");
     objectShader.use();
     //material properties
     objectShader.setVec3("material.ambientColor", 1.0f, 1.0f, 1.0f);
@@ -193,7 +193,8 @@ int main() {
     //light properties
     objectShader.setVec3("light.position", lightPos);
     objectShader.setVec3("light.direction", lightDir);
-    objectShader.setFloat("light.cutoff", glm::cos(glm::radians(30.5f))); //use the cosine because the dot product returns a cosine value (also save computation by not having to use arccos)
+    objectShader.setFloat("light.cutoff", glm::cos(glm::radians(12.5f))); //use the cosine because the dot product returns a cosine value (also save computation by not having to use arccos)
+    objectShader.setFloat("light.outerCutoff", glm::cos(glm::radians(17.5f)));
 
     objectShader.setVec3("light.ambientStrength", 0.1f, 0.1f, 0.1f);
     objectShader.setVec3("light.diffuseStrength", 0.8f, 0.8f, 0.8f);
@@ -309,8 +310,8 @@ int main() {
         objectShader.setMat4("view", view);
         objectShader.setVec3("viewPos", camera.Position);
 
-        //objectShader.setVec3("light.position", camera.Position);
-        //objectShader.setVec3("light.direction", camera.Foward);
+        objectShader.setVec3("light.position", camera.Position);
+        objectShader.setVec3("light.direction", camera.Foward);
 
         glBindVertexArray(cubeVAO);
         for (unsigned int i = 0; i < sizeof(cubePositions) / sizeof(glm::vec3); i++)
