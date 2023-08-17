@@ -217,7 +217,7 @@ int main() {
 
 
     objectShader.setFloat("spot.cutoff", glm::cos(glm::radians(12.5f))); //use the cosine because the dot product returns a cosine value (also save computation by not having to use arccos)
-    objectShader.setFloat("spot.outerCutoff", glm::cos(glm::radians(12.5f)));
+    objectShader.setFloat("spot.outerCutoff", glm::cos(glm::radians(17.5f)));
 
     objectShader.setVec3("spot.ambientStrength", 0.1f, 0.1f, 0.1f);
     objectShader.setVec3("spot.diffuseStrength", 0.8f, 0.8f, 0.8f);
